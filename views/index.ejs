@@ -1,0 +1,39 @@
+<%- include('partials/head') %>
+  <%- include('partials/header') %>
+    <main>
+      <section>
+        <div class="text-center">
+          <picture>
+            <source media="(min-width:992px)" srcset="https://picsum.photos/1080/640">
+            <source media="(min-width:768px)" srcset="https://picsum.photos/992/640">
+            <img src="https://picsum.photos/600/700" alt="Flowers" class="img-fluid">
+          </picture>
+          <div class="my-5">
+            <h2>Our story</h2>
+            <p class="h3">well underway and only beginning</p>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ducimus illo
+              corporis libero maiores, quasi error nostrum earum laboriosam dicta
+              laudantium quod quaerat accusamus quia pariatur. Quod doloremque dolor
+              ratione vero?
+            </p>
+          </div>
+        </div>
+      </section>
+      <section>
+        
+          <div class="row text-center">
+            <% for (profile of profiles) { %>
+              <div class="col-sm-6 col-md position-relative my-3">
+                <h2>
+                  <%= profile.name %>
+                </h2>
+                <img src="<%= profile.photoUrl %>" class="img-thumbnail profile-img" alt="" />
+                <a href="/family-member/<%= profile._id %>" class="btn btn-primary stretched-link mt-3">Meet <%= profile.name
+                    %></a>
+              </div>
+              <% } %>
+          </div>
+      </section>
+    </main>
+    <%- include('partials/footer') %>

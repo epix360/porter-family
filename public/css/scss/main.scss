@@ -1,0 +1,79 @@
+@import "variables.scss";
+@import "breakpoints.scss";
+@import "rte.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,700;1,200;1,300;1,400;1,700&display=swap');
+
+body {
+  color: $prblue;
+  background-color: $argblue;
+  font-family: $font-sans-serif;
+  font-size: 1.2rem;
+
+  #jokeDisplay {
+    p {
+      background-color: $prblue;
+      font-family: $font-display;
+      font-size: 1.5rem;
+      padding: 30px;
+      width: 50%;
+      margin: 20px auto;
+    }
+  }
+
+  .profile-img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    object-position: 0 20%;
+  }
+
+  pre,
+  code {
+    border: 1px #999 dotted;
+    background-color: #222;
+    color: olivedrab;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+  }
+}
+
+h1,
+h2,
+.h1,
+.h2 {
+  font-family: $font-serif;
+}
+
+.btn-primary {
+  color: $cream;
+  background-color: $viridian;
+  border-color: $viridian;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $viridian-hover;
+    border-color: $viridian-hover;
+  }
+}
+
+.btn-danger {
+  background-color: $prblue;
+  border-color: $prblue;
+
+  &:hover,
+  &:active {
+    background-color: $prblue-hover;
+    border-color: $prblue-hover;
+  }
+}
+
+.menu-ctrl {
+  font-size: 2rem;
+  z-index: 99;
+
+  @include breakpoint(medium) {
+    left: 21%;
+  }
+}

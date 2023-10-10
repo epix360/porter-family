@@ -1,0 +1,30 @@
+<%- include('../../partials/head') %>
+  <%- include('../../partials/header') %>
+    <h2>Eric</h2>
+    <div class="text-center" id="jokeDisplay"></div>
+    <div class="row">
+      <div class="col-md">
+        <div id="editor">
+          <p>Hello World!</p>
+          <p>Some initial <strong>bold</strong> text</p>
+          <p><br></p>
+        </div>
+        <!--Left column-->
+        <h3>To-dos</h3>
+        <button class="btn btn-primary" id="deliver-todos">Show my to-dos</button>
+        <ul id="todos-list"></ul>
+      </div>
+      <div class="col-md">
+        <!--Right column-->
+        <h3>TV Show Search</h3>
+        <form class="row" id="searchForm">
+          <div class="col">
+            <input class="form-control" type="text" placeholder="TV Show Title" name="query" />
+          </div>
+          <div class="col">
+            <button class="btn btn-primary">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <%- include('../../partials/footer') %>

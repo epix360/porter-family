@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,700;1,200;1,300;1,400;1,700&display=swap");
+body {
+  color: #032B43;
+  background-color: #5AA9E6;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 1.2rem;
+}
+body #jokeDisplay p {
+  background-color: #032B43;
+  font-family: "Bungee Spice", cursive;
+  font-size: 1.5rem;
+  padding: 30px;
+  width: 50%;
+  margin: 20px auto;
+}
+body .profile-img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  object-position: 0 20%;
+}
+
+h1,
+h2,
+.h1,
+.h2 {
+  font-family: "Merriweather", serif;
+}
+
+.btn-primary {
+  color: #F6FFF8;
+  background-color: #498467;
+  border-color: #498467;
+}
+.btn-primary:hover {
+  background-color: #F6FFF8;
+  color: #032B43;
+  border-color: #498467;
+}
+
+.menu-ctrl {
+  font-size: 2rem;
+  z-index: 99;
+}
+@media (min-width: 768px) {
+  .menu-ctrl {
+    left: 21%;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */

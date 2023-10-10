@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_author_bylines",
+  "info": {
+    "displayName": "Byline"
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Photo": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "Tagline": {
+      "type": "string"
+    }
+  }
+}

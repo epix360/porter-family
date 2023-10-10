@@ -1,0 +1,9 @@
+<%- include('../partials/head') %>
+  <%- include('../partials/header') %>
+<h1>Porter Family Members</h1>
+    <ul>
+        <% for (let profile of profiles) { %>
+            <a href="/family-member/<%= profile._id %>"><li><%= profile.name %></li></a>
+            <% } %>
+    </ul>
+    <%- include('../partials/footer') %>

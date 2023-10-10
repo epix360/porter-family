@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "handlebars-webpack-plugin": "^2.2.1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "froala-editor": "^4.1.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^7.5.4"
+  }
+}
