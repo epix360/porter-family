@@ -25,6 +25,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+
 app.get('/', async (req, res) =>{
     const profiles = await Profile.find({})
     res.render('index', {profiles})
@@ -53,6 +54,10 @@ app.put('/family-member/:id', async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
     res.redirect(`/family-member/${profile._id}`)
+})
+
+app.use((req, res) => {
+    res.status(404).send('Not found')
 })
 
 app.listen(port, () => {
