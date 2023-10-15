@@ -9,12 +9,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Family members
-                        </a>
-                        <ul class="dropdown-menu">
+                    <li>
+                            <p class="h5"><strong>Family members</strong></p>
+                        <ul class="family-nav-list">
                             <% for (let profile of profiles) { %>
                                 <a href="/family-member/<%= profile._id %>" class="text-decoration-none"><li class="dropdown-item"><%= profile.name %></li></a>
                                 <% } %>

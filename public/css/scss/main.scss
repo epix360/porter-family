@@ -5,8 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&family=Source+Sans+3:ital,wght@0,200;0,300;0,400;0,700;1,200;1,300;1,400;1,700&display=swap');
 
 body {
-  color: $prblue;
-  background-color: $argblue;
+  color: $cream;
+  background-color: $prblue;
   font-family: $font-sans-serif;
   font-size: 1.2rem;
 
@@ -36,44 +36,77 @@ body {
     overflow: auto;
     padding: 0.5em 0.75em;
   }
-}
 
-h1,
-h2,
-.h1,
-.h2 {
-  font-family: $font-serif;
-}
-
-.btn-primary {
-  color: $cream;
-  background-color: $viridian;
-  border-color: $viridian;
-
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: $viridian-hover;
-    border-color: $viridian-hover;
+  a {
+    color: $jonquil;
   }
-}
 
-.btn-danger {
-  background-color: $prblue;
-  border-color: $prblue;
+  #editor-container {
+    color: $prblue !important;
 
-  &:hover,
-  &:active {
-    background-color: $prblue-hover;
-    border-color: $prblue-hover;
+    h1,
+    h2,
+    .h1 .h2 {
+      color: $prblue !important;
+    }
   }
-}
 
-.menu-ctrl {
-  font-size: 2rem;
-  z-index: 99;
+  .offcanvas {
+    background-color: $indigodye;
+    color: $cream;
 
-  @include breakpoint(medium) {
-    left: 21%;
+    .family-nav-list {
+      padding-left: 5px;
+
+      a {
+        color: $cream;
+
+        li {
+          border-top: solid thin $indigodye;
+          border-bottom: solid thin $indigodye;
+
+          &:hover {
+            border-top: solid thin $prblue;
+            border-bottom: solid thin $prblue;
+          }
+        }
+      }
+    }
+  }
+
+  h1,
+  h2,
+  .h1,
+  .h2 {
+    font-family: $font-serif;
+  }
+
+  .btn-primary {
+    color: $cream;
+    background-color: $dkspgreen;
+    border-color: $dkspgreen;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $dkspgreen-hover;
+      border-color: $dkspgreen-hover;
+    }
+  }
+
+  .btn-danger {
+    background-color: $madder;
+    border-color: $madder;
+
+    &:hover,
+    &:active {
+      background-color: $madder-hover;
+      border-color: $madder-hover;
+    }
+  }
+
+  .menu-ctrl {
+    color: $cream;
+    font-size: 2rem;
   }
 }
