@@ -1,8 +1,22 @@
 <% layout('/layouts/boilerplate') %>
-<h2 class="h1"><%=profile.name%>'s Blog</h2>
-<ul>
-    <% for (let blogPost of blogPosts) { %>
-        <li><a href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>"><%=blogPost.title%></a></li>
-   <% } %>
-</ul>
-<a href="/family-member/<%=profile._id%>/blog/new">New Post</a>
+    <div class="row">
+        <div class="col">
+            <h2 class="h1">
+                <%=profile.name%>'s Blog
+            </h2>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-primary" href="/family-member/<%=profile._id%>/blog/new">New Post</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ul>
+                <% for (let blogPost of blogPosts) { %>
+                    <li><a href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>">
+                            <%=blogPost.title%>
+                        </a></li>
+                    <% } %>
+            </ul>
+        </div>
+    </div>
