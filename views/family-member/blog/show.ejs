@@ -1,0 +1,12 @@
+<% layout('/layouts/boilerplate') %>
+<h2><%=blogPost.title%></h2>
+<p><small><%=blogPost.date.toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})%></small></p>
+<p>By <%= blogPost.profile.name %></p>
+<div><%=blogPost.content%></div>
+    <div>
+        <a class="card-link btn btn-info" href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>/edit">Edit Post</a>
+        <form class="d-inline" action="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+        <a class="card-link" href="/family-member/<%=profile._id%>/blog">All Posts</a>
+    </div>
