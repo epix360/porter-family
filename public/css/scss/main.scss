@@ -41,16 +41,6 @@ body {
     color: $jonquil;
   }
 
-  #editor-container {
-    color: $prblue !important;
-
-    h1,
-    h2,
-    .h1 .h2 {
-      color: $prblue !important;
-    }
-  }
-
   .offcanvas {
     background-color: $indigodye;
     color: $cream;
@@ -91,6 +81,18 @@ body {
     &:active {
       background-color: $dkspgreen-hover;
       border-color: $dkspgreen-hover;
+    }
+  }
+
+  .btn-info {
+    background-color: $jonquil;
+    border-color: $jonquil;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $jonquil-hover;
+      border-color: $jonquil-hover;
     }
   }
 

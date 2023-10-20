@@ -16,23 +16,18 @@ var toolbarOptions = [
 
     ['clean']                                         // remove formatting button
 ];
-var quill = new Quill('#editor-container', {
+
+const editPostQuill = new Quill('#edit-post-editor', {
     modules: {
         toolbar: toolbarOptions
     },
     placeholder: 'Write your story...',
     theme: 'snow'
 });
-var formSubmit = document.querySelector('form');
-formSubmit.onsubmit = function () {
-    // Populate hidden form on submit
-    var bioInput = document.querySelector('input[name=bio]');
-    var bioText = quill.root.innerHTML;
-    bioInput.value = bioText;
 
-    console.log("Submitted", $(formSubmit).serialize(), $(formSubmit).serializeArray());
-
-    // No back end to actually submit to!
-    console.log('Open the console to see the submit data!')
-    return false;
-};
+const editorContents = editPostQuill.on('text-change', function () {
+    var blogInput = document.querySelector('input[id=content]');
+    var postContent = editPostQuill.root.innerHTML;
+    blogInput.value = postContent;
+    console.log(blogInput.value)
+});

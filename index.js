@@ -100,6 +100,31 @@ app.get('/family-member/:id/blog/:postId', catchAsync(async (req, res) => {
     const blogPost = await BlogPost.findById(postId).populate('profile', 'name');
     res.render('family-member/blog/show', { profile, profiles, blogPost })
 }))
+
+app.get('/family-member/:id/blog/:postId/edit', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const { postId } = req.params;
+    const profile = await Profile.findById(id)
+    const profiles = await Profile.find({})
+    const blogPost = await BlogPost.findById(postId);
+    res.render(`family-member/blog/edit`, { profile, profiles, blogPost })
+}))
+
+app.put('/family-member/:id/blog/:postId', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const { postId } = req.params;
+    const profile = await Profile.findById(id);
+    const blogPost = await BlogPost.findByIdAndUpdate(postId, req.body, { runValidators: true, new: true });
+    res.redirect(`/family-member/${ profile._id }/blog/${ blogPost._id }`)
+}))
+
+app.delete('/family-member/:id/blog/:postId', catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const { postId } = req.params;
+    const profile = await Profile.findById(id)
+    await BlogPost.findByIdAndDelete(postId);
+    res.redirect(`/family-member/${ profile._id }/blog`);
+}))
 //
 
 app.use(function(req, res, next){

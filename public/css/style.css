@@ -9,6 +9,15 @@
   background: #F6FFF8;
 }
 
+.editor-container {
+  color: #032B43 !important;
+}
+.editor-container h1,
+.editor-container h2,
+.editor-container .h1 .h2 {
+  color: #032B43 !important;
+}
+
 body {
   color: #F6FFF8;
   background-color: #032B43;
@@ -39,14 +48,6 @@ body code {
 }
 body a {
   color: #ECC30B;
-}
-body #editor-container {
-  color: #032B43 !important;
-}
-body #editor-container h1,
-body #editor-container h2,
-body #editor-container .h1 .h2 {
-  color: #032B43 !important;
 }
 body .offcanvas {
   background-color: #053E61;
@@ -80,6 +81,14 @@ body .btn-primary {
 body .btn-primary:hover, body .btn-primary:focus, body .btn-primary:active {
   background-color: rgba(34, 111, 84, 0.7);
   border-color: rgba(34, 111, 84, 0.7);
+}
+body .btn-info {
+  background-color: #ECC30B;
+  border-color: #ECC30B;
+}
+body .btn-info:hover, body .btn-info:focus, body .btn-info:active {
+  background-color: rgba(236, 195, 11, 0.7);
+  border-color: rgba(236, 195, 11, 0.7);
 }
 body .btn-danger {
   background-color: #A41623;

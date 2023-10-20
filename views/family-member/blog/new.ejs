@@ -1,21 +1,25 @@
 <% layout('/layouts/boilerplate') %>
     <div class="row">
-        <h2 class="h1"><%=profile.name%>'s Blog</h2>
+        <h2 class="h1">
+            <%=profile.name%>'s Blog
+        </h2>
         <h3>Write a new blog post</h3>
         <div class="col-6 offset-3">
-            <form action="/family-member/<%=profile._id%>/blog" method="POST">
+            <form id="newPostForm" action="/family-member/<%=profile._id%>/blog" method="POST">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" id="title" name="blogPost[title]">
+                    <input class="form-control" type="text" id="title" name="blogPost[title]" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="content">Content</label>
-                    <textarea class="form-control" type="text" id="image" name="blogPost[content]"></textarea>
+                    <input type="hidden" id="content" name="blogPost[content]" aria-describedby="content" required>
+                    <div id="new-post-editor" class="form-control editor-container"></div>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-success">Add Post</button>
+                    <button class="btn btn-success">Create Post</button>
                 </div>
                 <a href="/family-member/<%=profile._id%>/blog">All Posts</a>
             </form>
         </div>
     </div>
+    <script type="text/javascript" src="/js/newPostQuillInit.js"></script>
