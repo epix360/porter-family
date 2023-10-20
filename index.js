@@ -4,7 +4,9 @@ const port = 3000
 const path = require('path')
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const { postSchema } = require('./schemas.js');
 const catchAsync = require('./utils/catchAsync');
+const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
 
 const Profile = require('./models/profile');
@@ -29,6 +31,15 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const validatePost = (req, res, next) => {
+    const { error } = postSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
 
 app.get('/', catchAsync(async (req, res) =>{
     const profiles = await Profile.find({})
@@ -49,7 +60,8 @@ app.get('/family-member/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findById(id)
     const profiles = await Profile.find({})
-    res.render('family-member/show', { profile, profiles })
+    const blogPosts = await BlogPost.find({profile: id}).sort({date:-1});
+    res.render('family-member/show', { profile, profiles, blogPosts })
 }))
 
 app.get('/family-member/:id/edit', catchAsync(async (req, res) => {
@@ -81,7 +93,7 @@ app.get('/family-member/:id/blog/new', catchAsync(async (req, res) => {
     res.render('family-member/blog/new', { profile, profiles });
 }))
 
-app.post('/family-member/:id/blog', catchAsync(async (req, res) => {
+app.post('/family-member/:id/blog', validatePost, catchAsync(async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findById(id);
     const blogPost = new BlogPost(req.body.blogPost);
@@ -98,7 +110,8 @@ app.get('/family-member/:id/blog/:postId', catchAsync(async (req, res) => {
     const profile = await Profile.findById(id)
     const profiles = await Profile.find({})
     const blogPost = await BlogPost.findById(postId).populate('profile', 'name');
-    res.render('family-member/blog/show', { profile, profiles, blogPost })
+    const blogPosts = await BlogPost.find({profile: id}).sort({date:-1});
+    res.render('family-member/blog/show', { profile, profiles, blogPost, blogPosts })
 }))
 
 app.get('/family-member/:id/blog/:postId/edit', catchAsync(async (req, res) => {

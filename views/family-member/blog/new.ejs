@@ -5,7 +5,8 @@
         </h2>
         <h3>Write a new blog post</h3>
         <div class="col-6 offset-3">
-            <form id="newPostForm" action="/family-member/<%=profile._id%>/blog" method="POST">
+            <form id="newPostForm" action="/family-member/<%=profile._id%>/blog" method="POST" novalidate
+                class="needs-validation">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
                     <input class="form-control" type="text" id="title" name="blogPost[title]" required>
@@ -16,7 +17,7 @@
                     <div id="new-post-editor" class="form-control editor-container"></div>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-success">Create Post</button>
+                    <button type="submit" class="btn btn-success">Create Post</button>
                 </div>
                 <a href="/family-member/<%=profile._id%>/blog">All Posts</a>
             </form>

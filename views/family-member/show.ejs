@@ -13,8 +13,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
-      <img src="<%=profile.photoUrl%>" class="img-responsive w-100" alt="" />
+    <div class="col-md-10">
+      <img src="<%=profile.photoUrl%>" class="float-start me-4" width="400" alt="" />
+      <div><%-profile.bio%></div>
     </div>
-    <div class="col"><%-profile.bio%></div>
+    
+    <div class="col-md-2">
+      <%-include('../partials/blog-list')%>
+    </div>
   </div>
+
+  

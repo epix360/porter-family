@@ -67,6 +67,20 @@ body .offcanvas .family-nav-list a li:hover {
   border-top: solid thin #032B43;
   border-bottom: solid thin #032B43;
 }
+body ol.blog-list,
+body ul.blog-list {
+  padding-left: 1.5rem;
+}
+body ol li,
+body ul li {
+  list-style-position: inside;
+}
+body ol li.blog-list-item,
+body ul li.blog-list-item {
+  list-style-position: outside;
+  margin-left: 0;
+  padding-left: 0;
+}
 body h1,
 body h2,
 body .h1,
