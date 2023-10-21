@@ -28,6 +28,17 @@ body {
     object-position: 0 20%;
   }
 
+  .post-img {
+    max-width: 50%;
+    display: block;
+    
+
+    @media screen and (max-width: 480px) {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+
   pre,
   code {
     border: 1px #999 dotted;
@@ -69,7 +80,7 @@ body {
     &.blog-list {
       padding-left: 1.5rem;
     }
-    
+
     li {
       list-style-position: inside;
 

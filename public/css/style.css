@@ -38,6 +38,16 @@ body .profile-img {
   object-fit: cover;
   object-position: 0 20%;
 }
+body .post-img {
+  max-width: 50%;
+  display: block;
+}
+@media screen and (max-width: 480px) {
+  body .post-img {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
 body pre,
 body code {
   border: 1px #999 dotted;

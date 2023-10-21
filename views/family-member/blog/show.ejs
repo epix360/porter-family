@@ -1,24 +1,28 @@
 <% layout('/layouts/boilerplate') %>
+    <div class="mb-3">
+        <a class="btn btn-info" href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>/edit">Edit
+            Post</a>
+        <form class="d-inline" action="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>?_method=DELETE"
+            method="POST">
+            <button type="submit" class="btn btn-danger">Delete Post</button>
+        </form>
+    </div>
     <div class="row">
-        <div class="col-md-10">
-            <h2>
-                <%=blogPost.title%>
-            </h2>
-            <p><small><%=blogPost.date.toLocaleDateString('en-us', { year:"numeric", month:"short",
-                        day:"numeric"})%></small></p>
-            <p>By <%=blogPost.profile.name%>
-            </p>
-            <div><%-blogPost.content%></div>
-            <a class="card-link btn btn-info" href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>/edit">Edit
-                Post</a>
-            <form class="d-inline" action="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>?_method=DELETE"
-                method="POST">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-            <a class="card-link" href="/family-member/<%=profile._id%>/blog">All Posts</a>
+        <div class="col-lg-10">
+            <article>
+                <h2>
+                    <%=blogPost.title%>
+                </h2>
+                <p><small>By <%=blogPost.profile.name%> | <%=blogPost.date.toLocaleDateString('en-us', { year:"numeric",
+                                month:"short", day:"numeric"})%></small></p>
+                <% if (blogPost.image) { %>
+                    <img class="post-img float-md-start img-fluid img-thumbnail me-md-4 mb-2" src="<%=blogPost.image%>"
+                        alt="">
+                    <% } %>
+                        <div><%-blogPost.content%></div>
+            </article>
         </div>
-    
-        <div class="col-md-2">
+        <div class="col-lg-2">
             <%-include('../../partials/blog-list')%>
         </div>
     </div>
