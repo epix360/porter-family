@@ -1,3 +1,5 @@
+Quill.register("modules/imageUploader", ImageUploader);
+
 var toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
     ['blockquote', 'code-block'],
@@ -9,6 +11,7 @@ var toolbarOptions = [
 
     [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
     [{ 'header': [2, 3, 4, 5, 6, false] }],
+    ['link', 'image'],                              // link, media
 
     [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
     [{ 'font': [] }],
@@ -19,7 +22,34 @@ var toolbarOptions = [
 
 const bioEditQuill = new Quill('#edit-profile-container', {
     modules: {
-        toolbar: toolbarOptions
+        toolbar: {
+            container: toolbarOptions
+        },
+        imageUploader: {
+            upload: (file) => {
+                return new Promise((resolve, reject) => {
+                    const formData = new FormData();
+                    formData.append("image", file);
+
+                    fetch(
+                        "https://api.imgbb.com/1/upload?key=7a97dbf9e779c72eca388a12d7cd1df2",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    )
+                        .then((response) => response.json())
+                        .then((result) => {
+                            console.log(result);
+                            resolve(result.data.url);
+                        })
+                        .catch((error) => {
+                            reject("Upload failed");
+                            console.error("Error:", error);
+                        });
+                });
+            }
+        },
     },
     placeholder: 'Write your story...',
     theme: 'snow'

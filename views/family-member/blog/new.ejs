@@ -12,10 +12,6 @@
                     <input class="form-control" type="text" id="title" name="blogPost[title]" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Image</label>
-                    <input class="form-control" type="text" id="image" name="blogPost[image]">
-                </div>
-                <div class="mb-3">
                     <label class="form-label" for="content">Content</label>
                     <input type="hidden" id="content" name="blogPost[content]" aria-describedby="content" required>
                     <div id="new-post-editor" class="form-control editor-container"></div>
@@ -27,4 +23,4 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="/js/newPostQuillInit.js"></script>
+    <script type="module" src="/js/newPostQuillInit.js"></script>

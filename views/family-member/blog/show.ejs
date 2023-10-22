@@ -15,11 +15,7 @@
                 </h2>
                 <p><small>By <%=blogPost.profile.name%> | <%=blogPost.date.toLocaleDateString('en-us', { year:"numeric",
                                 month:"short", day:"numeric"})%></small></p>
-                <% if (blogPost.image) { %>
-                    <img class="post-img float-md-start img-fluid img-thumbnail me-md-4 mb-2" src="<%=blogPost.image%>"
-                        alt="">
-                    <% } %>
-                        <div><%-blogPost.content%></div>
+                <div><%-blogPost.content%></div>
             </article>
         </div>
         <div class="col-lg-2">

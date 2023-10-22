@@ -8,9 +8,6 @@ const postSchema = new Schema({
     content: {
         type: String
     },
-    image: {
-        type: String
-    },
     profile: {
         type: Schema.Types.ObjectID.name,
         ref: 'Profile'

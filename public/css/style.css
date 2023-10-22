@@ -38,14 +38,18 @@ body .profile-img {
   object-fit: cover;
   object-position: 0 20%;
 }
-body .post-img {
+body article img {
+  float: left;
   max-width: 50%;
   display: block;
+  margin-right: 1.5rem;
 }
 @media screen and (max-width: 480px) {
-  body .post-img {
+  body article img {
+    float: none;
     max-width: 100%;
     margin: 0 auto;
+    padding-bottom: 1rem;
   }
 }
 body pre,
