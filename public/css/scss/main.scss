@@ -29,9 +29,24 @@ body {
   }
 
   article {
+    p {
+      &:first-child {
+        //DROP CAP
+        &:first-letter {
+          color: $madder;
+          float: left;
+          font-family: $font-serif;
+          font-size: 90px;
+          line-height: 50px;
+          padding-top: 20px;
+          padding-right: 8px;
+        }
+      }
+    }
+
     img {
       float: left;
-      max-width: 50%;
+      max-width: 50% !important;
       display: block;
       margin-right: 1.5rem;
 

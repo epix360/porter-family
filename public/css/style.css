@@ -38,9 +38,18 @@ body .profile-img {
   object-fit: cover;
   object-position: 0 20%;
 }
+body article p:first-child:first-letter {
+  color: #A41623;
+  float: left;
+  font-family: "Merriweather", serif;
+  font-size: 90px;
+  line-height: 50px;
+  padding-top: 20px;
+  padding-right: 8px;
+}
 body article img {
   float: left;
-  max-width: 50%;
+  max-width: 50% !important;
   display: block;
   margin-right: 1.5rem;
 }

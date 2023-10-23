@@ -25,6 +25,9 @@ const setYear = () => {
         })
 })()
 
+//ADDS BORDER TO BLOG POST IMAGES (EMBEDDED THROUGH QUILL RTE)
+document.querySelectorAll('article img').forEach(x=>x.classList.add('img-thumbnail'));
+
 //ADD TODOS FROM JSONPLACEHOLDER DATA TO DOM (ERIC PAGE)
 // const todosBtn = document.querySelector('#deliver-todos');
 // let myList = document.querySelector("#todos-list");
