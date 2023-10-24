@@ -91,7 +91,8 @@ body .offcanvas .family-nav-list a li:hover {
   border-bottom: solid thin #032B43;
 }
 body .alert {
-  margin-bottom: 0;
+  margin-top: 0.5rem;
+  margin-bottom: -2rem;
 }
 body .alert.alert-success {
   background-color: rgba(34, 111, 84, 0.7);
