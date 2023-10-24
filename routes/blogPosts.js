@@ -52,7 +52,7 @@ router.get('/:postId', catchAsync(async (req, res) => {
     const blogPosts = await BlogPost.find({profile: id}).sort({date:-1});
     if (!blogPost) {
         req.flash('error', 'Post not found!');
-        return res.redirect('family-member/blog/show');
+        return res.redirect('/family-member/blog/show');
     }
     res.render('family-member/blog/show', { profile, profiles, blogPost, blogPosts })
 }))
@@ -63,9 +63,9 @@ router.get('/:postId/edit', catchAsync(async (req, res) => {
     const profile = await Profile.findById(id)
     const profiles = await Profile.find({})
     const blogPost = await BlogPost.findById(postId);
-    if (!blogPost) {
+    if (!postId) {
         req.flash('error', 'Post not found!');
-        return res.redirect('family-member/blog/edit');
+        return res.redirect('/family-member/blog/edit');
     }
     res.render('family-member/blog/edit', { profile, profiles, blogPost })
 }))
