@@ -65,7 +65,7 @@ app.get('/college-savings', catchAsync(async (req, res) =>{
 
 //ROUTES
 app.use('/family-member', profileRoutes);
-app.use('/family-member', blogPostRoutes);
+app.use('/family-member/:id/blog', blogPostRoutes);
 
 app.use(function(req, res, next){
     res.status(404).render('page-not-found', { title: "Sorry, page not found" });
