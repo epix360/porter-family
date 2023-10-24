@@ -55,12 +55,17 @@ app.use((req, res, next) => {
 
 app.get('/', catchAsync(async (req, res) =>{
     const profiles = await Profile.find({})
-    res.render('index', {profiles})
+    res.render('index', { profiles })
 }))
 
 app.get('/college-savings', catchAsync(async (req, res) =>{
     const profiles = await Profile.find({})
-    res.render('college-savings', {profiles})
+    res.render('college-savings', { profiles })
+}))
+
+app.get('/experiments', catchAsync(async (req, res) =>{
+    const profiles = await Profile.find({})
+    res.render('experiments', { profiles })
 }))
 
 //ROUTES

@@ -1,0 +1,93 @@
+<% layout('/layouts/boilerplate') %>
+<h2>Experiments</h2>
+<div class="text-center" id="jokeDisplay"></div>
+<div class="row">
+  <div class="col-md"> <!--Left column-->
+    <h3>To-dos</h3>
+    <button class="btn btn-primary" id="deliver-todos">Show my to-dos</button>
+    <ul id="todos-list"></ul>
+  </div>
+  <div class="col-md"> <!--Right column-->
+    <h3>TV Show Search</h3>
+    <form class="row" id="searchForm">
+      <div class="col">
+        <input class="form-control" type="text" placeholder="TV Show Title" name="query" />
+      </div>
+      <div class="col">
+        <button class="btn btn-primary">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+//ADD TODOS FROM JSONPLACEHOLDER DATA TO DOM (ERIC PAGE)
+const todosBtn = document.querySelector('#deliver-todos');
+let myList = document.querySelector("#todos-list");
+
+todosBtn.addEventListener("click", async () => {
+    for (let i = 1; i <= 10; i++) {
+        const request = await fetch('https://jsonplaceholder.typicode.com/todos/' + i, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        const json = await request.json();
+        let todo = json.title;
+        const li = document.createElement('li');
+
+        li.innerText = todo;
+
+        myList.appendChild(li);
+    }
+});
+
+//TV SHOW SEARCH PRACTICE
+const form = document.querySelector('#searchForm');
+form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearImages();
+    const searchTerm = form.elements.query.value;
+    const config = { params: { q: searchTerm } }
+    const res = await axios.get(`https://api.tvmaze.com/search/shows`, config);
+    makeImages(res.data);
+    form.elements.query.value = '';
+})
+
+const makeImages = (shows) => {
+
+    for (let result of shows) {
+        if (result.show.image) {
+            const img = document.createElement('IMG');
+            img.classList.add('result')
+            img.src = result.show.image.medium;
+            document.body.append(img);
+        }
+    }
+}
+
+function clearImages() {
+    const imgToDelete = document.getElementsByClassName('result');
+    while (imgToDelete[0]) {
+        imgToDelete[0].parentNode.removeChild(imgToDelete[0]);
+    }
+}
+
+//DAD JOKE
+const jokeDisplay = document.querySelector("#jokeDisplay");
+
+window.onload = async () => {
+    const request = await fetch('https://icanhazdadjoke.com/', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    });
+    const json = await request.json();
+    const jokePara = document.createElement('p');
+    jokePara.innerText = json.joke;
+
+    jokeDisplay.appendChild(jokePara);
+}
+//END DAD JOKE
+</script>
