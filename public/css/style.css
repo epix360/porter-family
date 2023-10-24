@@ -90,6 +90,14 @@ body .offcanvas .family-nav-list a li:hover {
   border-top: solid thin #032B43;
   border-bottom: solid thin #032B43;
 }
+body .alert {
+  margin-bottom: 0;
+}
+body .alert.alert-success {
+  background-color: rgba(34, 111, 84, 0.7);
+  border-color: rgba(34, 111, 84, 0.7);
+  color: #F6FFF8;
+}
 body ol.blog-list,
 body ul.blog-list {
   padding-left: 1.5rem;

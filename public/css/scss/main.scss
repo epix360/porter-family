@@ -95,6 +95,16 @@ body {
     }
   }
 
+  .alert {
+    margin-bottom: 0;
+
+    &.alert-success {
+      background-color: $dkspgreen-hover;
+      border-color: $dkspgreen-hover;
+      color: $cream;
+    }
+  }
+
   ol,
   ul {
     &.blog-list {

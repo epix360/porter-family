@@ -4,10 +4,11 @@ const port = 3000
 const path = require('path')
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const { postSchema } = require('./schemas.js');
+const session = require('express-session');
+const flash = require('connect-flash');
 const catchAsync = require('./utils/catchAsync');
-const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
+
 const profileRoutes = require('./routes/profiles');
 const blogPostRoutes = require('./routes/blogPosts');
 
@@ -28,13 +29,29 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.set('models', path.join(__dirname, '/models'));
 
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-//ROUTES
-app.use('/family-member', profileRoutes);
-app.use('/family-member', blogPostRoutes);
+const sessionConfig = {
+    secret: 'thisshouldbeabettersecret!',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+
+app.use(session(sessionConfig))
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 
 app.get('/', catchAsync(async (req, res) =>{
     const profiles = await Profile.find({})
@@ -45,6 +62,10 @@ app.get('/college-savings', catchAsync(async (req, res) =>{
     const profiles = await Profile.find({})
     res.render('college-savings', {profiles})
 }))
+
+//ROUTES
+app.use('/family-member', profileRoutes);
+app.use('/family-member', blogPostRoutes);
 
 app.use(function(req, res, next){
     res.status(404).render('page-not-found', { title: "Sorry, page not found" });
