@@ -43,7 +43,11 @@ body .profile-img {
   object-fit: cover;
   object-position: 0 20%;
 }
+body article h2 a {
+  text-decoration: none;
+}
 body article p:first-child:first-letter {
+  text-transform: capitalize;
   color: #A41623;
   float: left;
   font-family: "Merriweather", serif;
@@ -84,23 +88,26 @@ body a[target=_blank]:after {
   vertical-align: super;
   zoom: 0.7;
 }
+body a:hover {
+  text-decoration: none;
+}
 body .offcanvas {
   background-color: #053E61;
   color: #F6FFF8;
 }
-body .offcanvas .family-nav-list {
-  padding-left: 5px;
-}
-body .offcanvas .family-nav-list a {
+body .offcanvas a {
   color: #F6FFF8;
 }
-body .offcanvas .family-nav-list a li {
+body .offcanvas a li {
   border-top: solid thin #053E61;
   border-bottom: solid thin #053E61;
 }
-body .offcanvas .family-nav-list a li:hover {
+body .offcanvas a li:hover {
   border-top: solid thin #032B43;
   border-bottom: solid thin #032B43;
+}
+body .offcanvas a .family-nav-list {
+  padding-left: 5px;
 }
 body .alert {
   margin-top: 0.5rem;

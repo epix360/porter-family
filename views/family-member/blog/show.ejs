@@ -9,18 +9,11 @@
         <% } %>
     </div>
     <div class="row">
-        <a href="/family-member/<%=profile._id%>"><small><i class="bi bi-chevron-left me-1"></i></small>
-            <%=profile.name%>'s Profile
+        <a href="/family-member/<%=profile._id%>/blog"><small><i class="bi bi-chevron-left me-1"></i></small>
+            All posts
         </a>
         <div class="col-lg-10">
-            <article>
-                <h2>
-                    <%=blogPost.title%>
-                </h2>
-                <p><small>By <%=blogPost.profile.name%> | <%=blogPost.date.toLocaleDateString('en-us', { year:"numeric",
-                                month:"short", day:"numeric"})%></small></p>
-                <div><%-blogPost.content%></div>
-            </article>
+            <%-include('../../partials/blog-article')%>
         </div>
         <div class="col-lg-2">
             <%-include('../../partials/blog-list')%>

@@ -1,24 +1,22 @@
 <% layout('/layouts/boilerplate') %>
     <div class="row">
         <div class="col">
-            <h2 class="h1">
-                <%=profile.name%>'s Blog
-            </h2>
+            <h2 class="h1"><%=profile.name%>'s blog</h2>
         </div>
         <% if(currentUser && profile.equals(currentUser._id)) { %>
-        <div class="col text-end">
-            <a class="btn btn-primary" href="/family-member/<%=profile._id%>/blog/new">New Post</a>
-        </div>
-        <% } %>
+            <div class="col text-end">
+                <a class="btn btn-primary" href="/family-member/<%=profile._id%>/blog/new">New Post</a>
+            </div>
+            <% } %>
     </div>
     <div class="row">
-        <div class="col">
-            <ul>
-                <% for (let blogPost of blogPosts) { %>
-                    <li><a href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>">
-                            <%=blogPost.title%>
-                        </a></li>
+        <div class="col-lg-10">
+            <% for (let blogPost of blogPosts) { %>
+                <%-include('../../partials/blog-article', { blogPost: blogPost })%>
                     <% } %>
-            </ul>
+        </div>
+
+        <div class="col-lg-2">
+            <%-include('../../partials/blog-list')%>
         </div>
     </div>
