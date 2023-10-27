@@ -78,28 +78,6 @@ app.get('/login', catchAsync(async (req, res) =>{
     res.render('login', { profiles })
 }))
 
-app.get('/college-savings', catchAsync(async (req, res) =>{
-    const profiles = await Profile.find({})
-    res.render('college-savings', { profiles })
-}))
-
-app.get('/experiments', catchAsync(async (req, res) =>{
-    const profiles = await Profile.find({})
-    res.render('experiments', { profiles })
-}))
-
-app.get('/page-not-found', catchAsync(async (req, res) =>{
-    const profiles = await Profile.find({})
-    res.render('page-not-found', { profiles })
-}))
-
-app.get('/login', catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const profile = await Profile.findById(id)
-    const profiles = await Profile.find({})
-    res.render('/login', { profile, profiles });
-}))
-
 app.post('/login',
     storeReturnTo,
     passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),
@@ -118,6 +96,21 @@ app.get('/logout', (req, res, next) => {
         res.redirect('/');
     });
 });
+
+app.get('/college-savings', catchAsync(async (req, res) =>{
+    const profiles = await Profile.find({})
+    res.render('college-savings', { profiles })
+}))
+
+app.get('/experiments', catchAsync(async (req, res) =>{
+    const profiles = await Profile.find({})
+    res.render('experiments', { profiles })
+}))
+
+app.get('/page-not-found', catchAsync(async (req, res) =>{
+    const profiles = await Profile.find({})
+    res.render('page-not-found', { profiles })
+}))
 
 app.use(function(req, res, next){
     res.status(404).render('page-not-found', { title: "Sorry, page not found" });
