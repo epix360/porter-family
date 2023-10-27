@@ -1,0 +1,47 @@
+<% layout('/layouts/boilerplate') %>
+    <h2 class="h1">
+        Create a profile
+    </h2>
+    <form id="newBioForm" action="/family-member/new" method="POST" novalidate class="needs-validation">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-control" type="text" id="name" name="name" aria-describedby="name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="username">Username</label>
+                    <input class="form-control" type="text" id="username" name="username" aria-describedby="username" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" id="password" name="password" aria-describedby="password" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" class="form-label" for="age">Age</label>
+                    <input class="form-control" type="number" id="age" name="age" aria-describedby="age" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="job">Occupation</label>
+                    <input class="form-control" type="string" name="job" id="job" spellcheck="true"
+                        aria-describedby="job" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="photoUrl">Image path</label>
+                    <input class="form-control" type="text" name="photoUrl" id="photoUrl" aria-describedby="photoUrl" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="bio">Bio</label>
+                <input type="hidden" name="bio" id="bio" aria-describedby="bio" required>
+                <div id="new-bio-container" class="editor-container" style="max-height: 350px;"></div>
+
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Create Profile</button>
+            </div>
+        </div>
+    </form>
+    <a href="/family-member">Cancel</a>
+    </div>
+    <script type="module" src="/js/newProfileQuillInit.js"></script>

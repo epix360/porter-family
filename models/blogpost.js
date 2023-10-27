@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-const { Schema }  = mongoose;
+const Schema  = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
-const postSchema = new Schema({
+const PostSchema = new Schema({
     title: {
         type: String
     },
@@ -18,6 +19,8 @@ const postSchema = new Schema({
     }
 })
 
-const BlogPost = mongoose.model('BlogPost', postSchema);
+PostSchema.plugin(passportLocalMongoose);
+
+const BlogPost = mongoose.model('BlogPost', PostSchema);
 
 module.exports = BlogPost;

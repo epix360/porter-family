@@ -5,16 +5,7 @@ const ExpressError = require('../utils/ExpressError');
 const { postSchema } = require('../schemas.js');
 const Profile = require('../models/profile');
 const BlogPost = require('../models/blogPost');;
-
-const validatePost = (req, res, next) => {
-    const { error } = postSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',');
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
+const { isLoggedIn, isAuthor, validateBlogPost } = require('../middleware');
 
 router.get('/', catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -24,14 +15,14 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('family-member/blog/index', { profile, profiles, blogPosts })
 }))
 
-router.get('/new', catchAsync(async (req, res) => {
+router.get('/new', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findById(id);
     const profiles = await Profile.find({});
     res.render('family-member/blog/new', { profile, profiles });
 }))
 
-router.post('/', validatePost, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, isAuthor, validateBlogPost, catchAsync(async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findById(id);
     const blogPost = new BlogPost(req.body.blogPost);
@@ -57,7 +48,7 @@ router.get('/:postId', catchAsync(async (req, res) => {
     res.render('family-member/blog/show', { profile, profiles, blogPost, blogPosts })
 }))
 
-router.get('/:postId/edit', catchAsync(async (req, res) => {
+router.get('/:postId/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { postId } = req.params;
     const profile = await Profile.findById(id)
@@ -70,7 +61,7 @@ router.get('/:postId/edit', catchAsync(async (req, res) => {
     res.render('family-member/blog/edit', { profile, profiles, blogPost })
 }))
 
-router.put('/:postId', catchAsync(async (req, res) => {
+router.put('/:postId', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { postId } = req.params;
     const profile = await Profile.findById(id);
@@ -79,7 +70,7 @@ router.put('/:postId', catchAsync(async (req, res) => {
     res.redirect(`/family-member/${ profile._id }/blog/${ blogPost._id }`)
 }))
 
-router.delete('/:postId', catchAsync(async (req, res) => {
+router.delete('/:postId', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { postId } = req.params;
     const profile = await Profile.findById(id)

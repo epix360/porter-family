@@ -1,20 +1,19 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
-const profileSchema = new Schema({
+const ProfileSchema = new Schema({
     name: {
-        type: String,
-        required: true
+        type: String
     },
     age: {
         type: Number,
-        required: true,
         min: 0
     },
-    photoUrl: {
+    job: {
         type: String
     },
-    job: {
+    photoUrl: {
         type: String
     },
     bio: {
@@ -28,6 +27,8 @@ const profileSchema = new Schema({
     ]
 })
 
-const Profile = mongoose.model('Profile', profileSchema);
+ProfileSchema.plugin(passportLocalMongoose);
+
+const Profile = mongoose.model('Profile', ProfileSchema);
 
 module.exports = Profile;

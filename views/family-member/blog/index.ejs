@@ -5,9 +5,11 @@
                 <%=profile.name%>'s Blog
             </h2>
         </div>
+        <% if(currentUser && profile.equals(currentUser._id)) { %>
         <div class="col text-end">
             <a class="btn btn-primary" href="/family-member/<%=profile._id%>/blog/new">New Post</a>
         </div>
+        <% } %>
     </div>
     <div class="row">
         <div class="col">

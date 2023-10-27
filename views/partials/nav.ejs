@@ -10,10 +10,14 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li>
-                            <p class="h5"><strong>Family members</strong></p>
+                        <p class="h5"><strong>Family members</strong></p>
                         <ul class="family-nav-list">
                             <% for (let profile of profiles) { %>
-                                <a href="/family-member/<%= profile._id %>" class="text-decoration-none"><li class="dropdown-item"><%= profile.name %></li></a>
+                                <a href="/family-member/<%= profile._id %>" class="text-decoration-none">
+                                    <li class="dropdown-item">
+                                        <%= profile.name %>
+                                    </li>
+                                </a>
                                 <% } %>
                         </ul>
                     </li>

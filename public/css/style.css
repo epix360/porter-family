@@ -25,6 +25,10 @@ body {
   font-family: "Source Sans 3", sans-serif;
   font-size: 1.2rem;
 }
+body .logout-message {
+  background-color: #F6FFF8;
+  color: #032B43;
+}
 body #jokeDisplay p {
   background-color: #032B43;
   font-family: "Bungee Spice", cursive;
