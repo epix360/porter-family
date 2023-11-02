@@ -12,6 +12,12 @@ const PostSchema = new Schema({
     content: {
         type: String
     },
+    blogImage: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'BlogPostImage'
+        }
+    ],
     profile: {
         type: Schema.Types.ObjectID.name,
         ref: 'Profile'
