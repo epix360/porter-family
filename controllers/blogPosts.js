@@ -29,8 +29,7 @@ module.exports.renderNewPost = async (req, res) => {
 }
 
 module.exports.renderBlogPost = async (req, res) => {
-    const { id } = req.params;
-    const { postId } = req.params;
+    const { id, postId } = req.params;
     const profile = await Profile.findById(id)
     const profiles = await Profile.find({})
     const blogPost = await BlogPost.findById(postId).populate('profile', 'name');
@@ -43,8 +42,7 @@ module.exports.renderBlogPost = async (req, res) => {
 }
 
 module.exports.renderEditForm = async (req, res) => {
-    const { id } = req.params;
-    const { postId } = req.params;
+    const { id, postId } = req.params;
     const profile = await Profile.findById(id)
     const profiles = await Profile.find({})
     const blogPost = await BlogPost.findById(postId);
@@ -56,8 +54,7 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.editBlogPost = async (req, res) => {
-    const { id } = req.params;
-    const { postId } = req.params;
+    const { id, postId } = req.params;
     const profile = await Profile.findById(id);
     const blogPost = await BlogPost.findByIdAndUpdate(postId, req.body, { runValidators: true, new: true });
     req.flash('success', 'Successfully updated blog post!');
@@ -65,8 +62,7 @@ module.exports.editBlogPost = async (req, res) => {
 }
 
 module.exports.deleteBlogPost = async (req, res) => {
-    const { id } = req.params;
-    const { postId } = req.params;
+    const { id, postId } = req.params;
     const profile = await Profile.findById(id)
     await BlogPost.findByIdAndDelete(postId);
     req.flash('success', 'Successfully deleted blog post')

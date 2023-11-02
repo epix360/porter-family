@@ -22,9 +22,8 @@
           <h2>
             <%= profile.name %>
           </h2>
-          <img src="<%= profile.photoUrl %>" class="img-thumbnail profile-img" alt="" />
-          <a href="/family-member/<%= profile._id %>" class="btn btn-primary stretched-link mt-3">Meet <%= profile.name
-              %></a>
+          <img src="<%= profile.image %>" class="img-thumbnail profile-img" alt="" />
+          <a href="/family-member/<%= profile._id %>" class="btn btn-primary stretched-link mt-3">Meet <%= profile.name %></a>
         </div>
         <% } %>
     </div>

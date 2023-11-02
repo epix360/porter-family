@@ -29,10 +29,12 @@ const editPostQuill = new Quill('#edit-post-editor', {
             upload: (file) => {
                 return new Promise((resolve, reject) => {
                     const formData = new FormData();
-                    formData.append("image", file);
-
+                    formData.append("file", file);
+                    formData.append("folder", `porterfamily/blog`);
+                    formData.append("upload_preset", "hrbbhef2");
+                    
                     fetch(
-                        "https://api.imgbb.com/1/upload?key=7a97dbf9e779c72eca388a12d7cd1df2",
+                        "https://api.cloudinary.com/v1_1/dzfjji5xy/image/upload",
                         {
                             method: "POST",
                             body: formData
@@ -41,7 +43,7 @@ const editPostQuill = new Quill('#edit-post-editor', {
                         .then((response) => response.json())
                         .then((result) => {
                             console.log(result);
-                            resolve(result.data.url);
+                            resolve(result.url);
                         })
                         .catch((error) => {
                             reject("Upload failed");

@@ -8,15 +8,15 @@
     <div class="col">
       <div class="text-end">
         <% if(currentUser && profile.equals(currentUser._id)) { %>
-        <a href="/family-member/<%=profile._id%>/edit" class="btn btn-info">Edit</a>
-        <% } %>
-        <a href="/family-member/<%=profile._id%>/blog" class="btn btn-primary">Visit blog</a>
+          <a href="/family-member/<%=profile._id%>/edit" class="btn btn-info">Edit</a>
+          <% } %>
+            <a href="/family-member/<%=profile._id%>/blog" class="btn btn-primary">Visit blog</a>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-10">
-      <img src="<%=profile.photoUrl%>" class="img-thumbnail float-start me-4" width="400" alt="" />
+      <img src="<%=profile.image%>" class="img-thumbnail float-start me-4" width="400" alt="" />
       <div><%-profile.bio%></div>
     </div>
 

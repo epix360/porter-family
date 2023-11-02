@@ -13,7 +13,10 @@ const ProfileSchema = new Schema({
     job: {
         type: String
     },
-    photoUrl: {
+    image: {
+        type: String,
+    },
+    filename: {
         type: String
     },
     bio: {

@@ -32,7 +32,7 @@ const bioEditQuill = new Quill('#edit-profile-container', {
                     formData.append("image", file);
 
                     fetch(
-                        "https://api.imgbb.com/1/upload?key=7a97dbf9e779c72eca388a12d7cd1df2",
+                        "https://api.cloudinary.com/v1_1/dzfjji5xy",
                         {
                             method: "POST",
                             body: formData

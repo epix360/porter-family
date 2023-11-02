@@ -1,4 +1,9 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const port = 3000
 const path = require('path')
@@ -31,6 +36,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.set('models', path.join(__dirname, '/models'));
 
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));

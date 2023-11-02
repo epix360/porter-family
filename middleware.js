@@ -1,7 +1,6 @@
 const { postSchema, profileSchema } = require('./schemas.js');
 const ExpressError = require('./utils/ExpressError');
 const Profile = require('./models/profile');
-const BlogPost = require('./models/blogPost');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
