@@ -76,7 +76,10 @@ const styleSrcUrls = [
     "https://cdn.quilljs.com"
 ];
 const connectSrcUrls = [
-
+    "https://api.cloudinary.com/",
+    "https://icanhazdadjoke.com/",
+    "https://jsonplaceholder.typicode.com/",
+    "https://api.tvmaze.com/"
 ];
 const fontSrcUrls = [
     "https://fonts.gstatic.com/",
@@ -96,7 +99,8 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/dzfjji5xy/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
-                "https://images.unsplash.com/",
+                "https://images.unsplash.com/",,
+                "https://static.tvmaze.com"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },

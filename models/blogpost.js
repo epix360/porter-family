@@ -5,9 +5,9 @@ var slug = require('mongoose-slug-generator');
 
 mongoose.plugin(slug)
 
-const ImageSchema = new Schema({
-    publicId: String
-});
+// const ImageSchema = new Schema({
+//     imageId: String
+// });
 
 const PostSchema = new Schema({
     title: {
@@ -16,7 +16,7 @@ const PostSchema = new Schema({
     content: {
         type: String
     },
-    imageIds: [ImageSchema],
+    imageIds: [String],
     profile: {
         type: Schema.Types.ObjectID.name,
         ref: 'Profile'
