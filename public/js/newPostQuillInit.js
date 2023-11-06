@@ -32,7 +32,7 @@ const newPostQuill = new Quill('#new-post-editor', {
                     formData.append("file", file);
                     formData.append("folder", `porterfamily/blog`);
                     formData.append("upload_preset", "hrbbhef2");
-                    
+
                     fetch(
                         "https://api.cloudinary.com/v1_1/dzfjji5xy/image/upload",
                         {
@@ -42,7 +42,8 @@ const newPostQuill = new Quill('#new-post-editor', {
                     )
                         .then((response) => response.json())
                         .then((result) => {
-                            console.log(result);
+                            cloudinaryPublicIds.push(result.public_id);
+                            imageInput.value = cloudinaryPublicIds;
                             resolve(result.url);
                         })
                         .catch((error) => {
@@ -61,5 +62,7 @@ const editorContents = newPostQuill.on('text-change', function () {
     var blogInput = document.querySelector('input[id=content]');
     var postContent = newPostQuill.root.innerHTML;
     blogInput.value = postContent;
-    console.log(blogInput.value)
 });
+
+let cloudinaryPublicIds = [];
+let imageInput = document.querySelector('#imageIds');

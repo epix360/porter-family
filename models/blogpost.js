@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
-const Schema  = mongoose.Schema;
+const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 var slug = require('mongoose-slug-generator');
 
 mongoose.plugin(slug)
+
+const ImageSchema = new Schema({
+    publicId: String
+});
 
 const PostSchema = new Schema({
     title: {
@@ -12,17 +16,12 @@ const PostSchema = new Schema({
     content: {
         type: String
     },
-    blogImage: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'BlogPostImage'
-        }
-    ],
+    imageIds: [ImageSchema],
     profile: {
         type: Schema.Types.ObjectID.name,
         ref: 'Profile'
     },
-    date: { 
+    date: {
         type: Date,
         default: () => new Date()
     },
@@ -32,7 +31,7 @@ const PostSchema = new Schema({
         slug_padding_size: 2,
         unique: true,
     }
-})
+});
 
 PostSchema.plugin(passportLocalMongoose);
 

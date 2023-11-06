@@ -32,7 +32,7 @@ const editPostQuill = new Quill('#edit-post-editor', {
                     formData.append("file", file);
                     formData.append("folder", `porterfamily/blog`);
                     formData.append("upload_preset", "hrbbhef2");
-                    
+
                     fetch(
                         "https://api.cloudinary.com/v1_1/dzfjji5xy/image/upload",
                         {
@@ -43,6 +43,9 @@ const editPostQuill = new Quill('#edit-post-editor', {
                         .then((response) => response.json())
                         .then((result) => {
                             console.log(result);
+
+                            const blogPostImage = document.getElementById('blogPostImage');
+                            blogPostImage.value = result.public_id;
                             resolve(result.url);
                         })
                         .catch((error) => {

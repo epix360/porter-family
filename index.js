@@ -17,6 +17,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const Profile = require('./models/profile');
 const { storeReturnTo } = require('./middleware');
+const helmet = require('helmet');
+
+const mongoSanitize = require('express-mongo-sanitize');
 
 const profileRoutes = require('./routes/profiles');
 const blogPostRoutes = require('./routes/blogPosts');
@@ -40,6 +43,7 @@ app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+app.use(mongoSanitize());
 
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',
@@ -54,6 +58,50 @@ const sessionConfig = {
 
 app.use(session(sessionConfig))
 app.use(flash());
+app.use(helmet());
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+    "https://unpkg.com/",
+    "https://cdn.quilljs.com"
+];
+const styleSrcUrls = [
+    "https://cdn.jsdelivr.net/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://fonts.googleapis.com/",
+    "https://fonts.gstatic.com/",
+    "https://unpkg.com/",
+    "https://cdn.quilljs.com"
+];
+const connectSrcUrls = [
+
+];
+const fontSrcUrls = [
+    "https://fonts.gstatic.com/",
+    "https://cdn.jsdelivr.net/"
+];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/dzfjji5xy/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());

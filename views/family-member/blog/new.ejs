@@ -13,11 +13,12 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="content">Content</label>
+                    <input type="hidden" id="imageIds" name="blogPost[imageIds]">
                     <input type="hidden" id="content" name="blogPost[content]" aria-describedby="content" required>
                     <div id="new-post-editor" class="form-control editor-container"></div>
                 </div>
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-success">Create Post</button>
+                    <button id="newPostFormSubmitBtn" type="submit" class="btn btn-success">Create Post</button>
                 </div>
                 <a href="/family-member/<%=profile._id%>/blog">All Posts</a>
             </form>
