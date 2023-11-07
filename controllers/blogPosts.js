@@ -1,25 +1,21 @@
 const Profile = require('../models/profile');
 const BlogPost = require('../models/blogpost');
-const ImageId = require('../models/blogpost');
 
 module.exports.renderBlogIndex = async (req, res) => {
-    const { id } = req.params;
-    const profile = await Profile.findById(id)
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     const profiles = await Profile.find({})
-    const blogPosts = await BlogPost.find({profile: id}).sort({date:-1});
+    const blogPosts = await BlogPost.find({profile: profile._id}).sort({date:-1});
     res.render('family-member/blog/index', { profile, profiles, blogPosts })
 }
 
 module.exports.renderNewPostForm = async (req, res) => {
-    const { id } = req.params;
-    const profile = await Profile.findById(id);
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     const profiles = await Profile.find({});
     res.render('family-member/blog/new', { profile, profiles });
 }
 
 module.exports.renderNewPost = async (req, res) => {
-    const { id } = req.params;
-    const profile = await Profile.findById(id);
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     const publicId = req.body.blogPost.imageIds;
     const idArr = publicId.split(',');
     const imageId = idArr;
@@ -30,15 +26,14 @@ module.exports.renderNewPost = async (req, res) => {
     await profile.save();
     await blogPost.save();
     req.flash('success', 'Successfully created new blog post!');
-    res.redirect(`/family-member/${profile._id}/blog`)
+    res.redirect(`/family-member/${profile.pname}/blog`)
 }
 
 module.exports.renderBlogPost = async (req, res) => {
-    const { id, postId } = req.params;
-    const profile = await Profile.findById(id)
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}})
     const profiles = await Profile.find({})
-    const blogPost = await BlogPost.findById(postId).populate('profile', 'name');
-    const blogPosts = await BlogPost.find({profile: id}).sort({date:-1});
+    const blogPost = await BlogPost.findOne({slug: {$eq: req.params.slug}}).populate('profile', 'name');
+    const blogPosts = await BlogPost.find({profile: profile._id}).sort({date:-1});
     if (!blogPost) {
         req.flash('error', 'Post not found!');
         return res.redirect('/family-member/blog/show');
@@ -47,11 +42,10 @@ module.exports.renderBlogPost = async (req, res) => {
 }
 
 module.exports.renderEditForm = async (req, res) => {
-    const { id, postId } = req.params;
-    const profile = await Profile.findById(id)
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     const profiles = await Profile.find({})
-    const blogPost = await BlogPost.findById(postId);
-    if (!postId) {
+    const blogPost = await BlogPost.findOne({slug: {$eq: req.params.slug}});
+    if (!slug) {
         req.flash('error', 'Post not found!');
         return res.redirect('/family-member/blog/edit');
     }
@@ -59,17 +53,15 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.editBlogPost = async (req, res) => {
-    const { id, postId } = req.params;
-    const profile = await Profile.findById(id);
-    const blogPost = await BlogPost.findByIdAndUpdate(postId, req.body, { runValidators: true, new: true });
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
+    const blogPost = await BlogPost.findOneAndUpdate({slug: {$eq: req.params.slug}}, req.body, { runValidators: true, new: true });
     req.flash('success', 'Successfully updated blog post!');
-    res.redirect(`/family-member/${ profile._id }/blog/${ blogPost._id }`)
+    res.redirect(`/family-member/${ profile.pname }/blog/${ blogPost.slug }`)
 }
 
 module.exports.deleteBlogPost = async (req, res) => {
-    const { id, postId } = req.params;
-    const profile = await Profile.findById(id)
-    await BlogPost.findByIdAndDelete(postId);
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}})
+    await BlogPost.findOneAndDelete({slug: {$eq: req.params.slug}});
     req.flash('success', 'Successfully deleted blog post')
-    res.redirect(`/family-member/${ profile._id }/blog`);
+    res.redirect(`/family-member/${ profile.pname }/blog`);
 }

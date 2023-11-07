@@ -1,9 +1,9 @@
 <h3>Posts</h3>
 <ul class="blog-list">
     <% for (let blogPost of blogPosts) { %>
-      <li class="blog-list-item"><a href="/family-member/<%=profile._id%>/blog/<%=blogPost._id%>">
+      <li class="blog-list-item"><a href="/family-member/<%=profile.pname%>/blog/<%=blogPost.slug%>">
           <%=blogPost.title%>
         </a></li>
       <% } %>
   </ul>
-  <a href="/family-member/<%=profile._id%>/blog">See all posts</a>
+  <a href="/family-member/<%=profile.pname%>/blog/">See all posts</a>

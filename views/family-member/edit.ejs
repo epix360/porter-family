@@ -1,6 +1,6 @@
 <% layout('/layouts/boilerplate') %>
   <h2 class="h1">Edit profile</h2>
-  <form id="bioEditForm" action="/family-member/<%= profile._id %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+  <form id="bioEditForm" action="/family-member/<%= profile.pname %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
     <div class="row">
       <div class="col">
         <div class="mb-3">
@@ -31,5 +31,5 @@
     </div>
     <button type="submit" class="btn btn-primary mb-3">Submit</button>
   </form>
-  <a href="/family-member/<%= profile._id %>">Cancel</a>
+  <a href="/family-member/<%= profile.pname %>">Cancel</a>
   <script type="text/javascript" src="/js/bioEditQuillInit.js"></script>

@@ -6,6 +6,9 @@ const ProfileSchema = new Schema({
     name: {
         type: String
     },
+    pname: {
+        type: String
+    },
     age: {
         type: Number,
         min: 0

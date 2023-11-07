@@ -40,10 +40,10 @@ module.exports.validateBlogPost = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
-    const profile = await Profile.findById(id)
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}})
     if (!profile.equals(req.user._id)) {
         req.flash('error', 'You do not have permission to do that!');
-        return res.redirect(`/blog/${id}`);
+        return res.redirect(`/blog/${slug}`);
     }
     next();
 }

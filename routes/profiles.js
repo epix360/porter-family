@@ -14,11 +14,11 @@ router.route('/new')
     .get(isLoggedIn, catchAsync(profiles.renderNewProfile))
     .post(isLoggedIn, upload.single('image'), catchAsync(profiles.postNewProfile))
 
-router.route('/:id')
+router.route('/:pname')
     .get(catchAsync(profiles.renderProfilePage))
     .put(isLoggedIn, isAuthor, upload.single('image'), catchAsync(profiles.editProfile))
 
-router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(profiles.renderEditForm))
+router.get('/:pname/edit', isLoggedIn, isAuthor, catchAsync(profiles.renderEditForm))
 
 
 

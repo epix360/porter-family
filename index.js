@@ -123,7 +123,7 @@ app.use((req, res, next) => {
 
 //ROUTES
 app.use('/family-member', profileRoutes);
-app.use('/family-member/:id/blog', blogPostRoutes);
+app.use('/family-member/:pname/blog', blogPostRoutes);
 
 //HOMEPAGE
 app.get('/', catchAsync(async (req, res) =>{

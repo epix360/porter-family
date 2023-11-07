@@ -14,8 +14,8 @@ module.exports.renderNewProfile = async (req, res) => {
 
 module.exports.postNewProfile = async (req, res, next) => {
     try {
-        const { name, username, password, age, job, image, filename, bio } = req.body;
-        const profile = new Profile({ name, username, age, job, image, filename, bio });
+        const { name, pname, username, password, age, job, image, filename, bio } = req.body;
+        const profile = new Profile({ name, pname, username, age, job, image, filename, bio });
         profile.image = req.file.path;
         profile.filename = req.file.filename;
         const registeredUser = await Profile.register(profile, password);
@@ -33,9 +33,9 @@ module.exports.postNewProfile = async (req, res, next) => {
 
 module.exports.renderProfilePage = async (req, res) => {
     const { id } = req.params;
-    const profile = await Profile.findById(id)
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}})
     const profiles = await Profile.find({})
-    const blogPosts = await BlogPost.find({profile: id}).sort({date:-1});
+    const blogPosts = await BlogPost.find({profile: profile._id}).sort({date:-1});
     if (!profile) {
         req.flash('error', 'Cannot find that profile!');
         return res.redirect('/');
@@ -45,7 +45,7 @@ module.exports.renderProfilePage = async (req, res) => {
 
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params;
-    const profile = await Profile.findById(id);
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     const profiles = await Profile.find({});
     if (!profile) {
         req.flash('error', 'Cannot find that profile!');
@@ -56,12 +56,12 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.editProfile = async (req, res) => {
     const { id } = req.params;
-    const profile = await Profile.findById(id);
+    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     await cloudinary.uploader.destroy(profile.filename);
-    await Profile.findByIdAndUpdate(id, { ...req.body }, { runValidators: true, new: true });
+    await Profile.findone({pname: { $eq: req.params.pname}}, { ...req.body }, { runValidators: true, new: true });
     profile.image = req.file.path;
     profile.filename = req.file.filename
     await profile.save();
     req.flash('success', 'Successfully updated profile!');
-    res.redirect(`/family-member/${ profile._id }`)
+    res.redirect(`/family-member/${ profile.pname }`)
 }

@@ -13,12 +13,12 @@ router.get('/new', isLoggedIn, isAuthor, catchAsync(posts.renderNewPostForm))
 
 router.post('/', isLoggedIn, isAuthor, upload.array('images'), catchAsync(posts.renderNewPost))
 
-router.get('/:postId', catchAsync(posts.renderBlogPost))
+router.get('/:slug', catchAsync(posts.renderBlogPost))
 
-router.get('/:postId/edit', isLoggedIn, isAuthor, catchAsync(posts.renderEditForm))
+router.get('/:slug/edit', isLoggedIn, isAuthor, catchAsync(posts.renderEditForm))
 
-router.put('/:postId', isLoggedIn, isAuthor, upload.array('images'), catchAsync(posts.editBlogPost))
+router.put('/:slug', isLoggedIn, isAuthor, upload.array('images'), catchAsync(posts.editBlogPost))
 
-router.delete('/:postId', isLoggedIn, isAuthor, catchAsync(posts.deleteBlogPost))
+router.delete('/:slug', isLoggedIn, isAuthor, catchAsync(posts.deleteBlogPost))
 
 module.exports = router;

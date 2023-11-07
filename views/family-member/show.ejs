@@ -8,9 +8,9 @@
     <div class="col">
       <div class="text-end">
         <% if(currentUser && profile.equals(currentUser._id)) { %>
-          <a href="/family-member/<%=profile._id%>/edit" class="btn btn-info">Edit</a>
+          <a href="/family-member/<%=profile.pname%>/edit" class="btn btn-info">Edit</a>
           <% } %>
-            <a href="/family-member/<%=profile._id%>/blog" class="btn btn-primary">Visit blog</a>
+            <a href="/family-member/<%=profile.pname%>/blog" class="btn btn-primary">Visit blog</a>
       </div>
     </div>
   </div>

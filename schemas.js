@@ -35,6 +35,7 @@ module.exports.postSchema = Joi.object({
 module.exports.profileSchema = Joi.object({
     profile: Joi.object({
         name: Joi.string().required().escapeHTML(),
+        pname: Joi.string().required().escapeHTML(),
         age: Joi.string().required().escapeHTML(),
         job: Joi.string().optional().allow(null, '').escapeHTML(),
         bio: Joi.string().optional().allow(null, '').escapeHTML(),
