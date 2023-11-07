@@ -27,7 +27,8 @@ module.exports.postSchema = Joi.object({
     blogPost: Joi.object({
         title: Joi.string().required().escapeHTML(),
         content: Joi.string().required().escapeHTML(),
-        image: Joi.string().optional().allow(null, '').escapeHTML()
+        image: Joi.string().optional().allow(null, '').escapeHTML(),
+        imageIds: Joi.array().items(Joi.string()).optional().allow(null, '')
     }).required()
 });
 

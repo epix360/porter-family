@@ -5,10 +5,6 @@ var slug = require('mongoose-slug-generator');
 
 mongoose.plugin(slug)
 
-// const ImageSchema = new Schema({
-//     imageId: String
-// });
-
 const PostSchema = new Schema({
     title: {
         type: String
@@ -16,7 +12,9 @@ const PostSchema = new Schema({
     content: {
         type: String
     },
-    imageIds: [String],
+    imageIds: {
+        type: Array
+    },
     profile: {
         type: Schema.Types.ObjectID.name,
         ref: 'Profile'
@@ -34,7 +32,6 @@ const PostSchema = new Schema({
 });
 
 PostSchema.plugin(passportLocalMongoose);
-
 const BlogPost = mongoose.model('BlogPost', PostSchema);
 
 module.exports = BlogPost;

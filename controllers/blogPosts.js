@@ -1,5 +1,6 @@
 const Profile = require('../models/profile');
 const BlogPost = require('../models/blogpost');
+const ImageId = require('../models/blogpost');
 
 module.exports.renderBlogIndex = async (req, res) => {
     const { id } = req.params;
@@ -19,7 +20,11 @@ module.exports.renderNewPostForm = async (req, res) => {
 module.exports.renderNewPost = async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findById(id);
+    const publicId = req.body.blogPost.imageIds;
+    const idArr = publicId.split(',');
+    const imageId = idArr;
     const blogPost = new BlogPost(req.body.blogPost);
+    blogPost.imageIds = imageId;
     profile.blogPosts.push(blogPost);
     blogPost.profile = profile;
     await profile.save();
