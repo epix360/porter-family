@@ -1,5 +1,5 @@
 const Profile = require('../models/profile');
-const BlogPost = require('../models/blogPost');
+const BlogPost = require('../models/blogpost');
 
 module.exports.renderBlogIndex = async (req, res) => {
     const { id } = req.params;
