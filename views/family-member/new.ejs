@@ -9,6 +9,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
                     <input class="form-control" type="text" id="name" name="name" aria-describedby="name" required>
+                    <input type="hidden" id="pname" name="pname">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="username">Username</label>
@@ -36,8 +37,9 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="bio">Bio</label>
+                <input type="hidden" id="imageIds" name="imageIds">
                 <input type="hidden" name="bio" id="bio" aria-describedby="bio" required>
-                <div id="new-bio-container" class="editor-container" style="max-height: 350px;"></div>
+                <div id="editor-container" class="editor-container" style="max-height: 350px;"></div>
 
             </div>
             <div class="mb-3">
@@ -47,4 +49,14 @@
     </form>
     <a href="/family-member">Cancel</a>
     </div>
-    <script type="module" src="/js/newProfileQuillInit.js"></script>
+    <script>
+        const name = document.getElementById('name');
+        const pname = document.getElementById('pname')
+        name.addEventListener("change", updateValue);
+
+        function updateValue(e) {
+            pname.value = e.target.value.trim().toLowerCase().replace(/\s+/g, '-').normalize('NFKD').replace(/[^\w\s.\-_\/]/g, '');
+            console.log(pname)
+        }
+    </script>
+    <script type="module" src="/js/bio-editor.js"></script>

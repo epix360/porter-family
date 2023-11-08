@@ -20,7 +20,7 @@ var toolbarOptions = [
     ['clean']                                         // remove formatting button
 ];
 
-const editPostQuill = new Quill('#edit-post-editor', {
+const quill = new Quill('#editor-container', {
     modules: {
         toolbar: {
             container: toolbarOptions
@@ -30,7 +30,7 @@ const editPostQuill = new Quill('#edit-post-editor', {
                 return new Promise((resolve, reject) => {
                     const formData = new FormData();
                     formData.append("file", file);
-                    formData.append("folder", `porterfamily/blog`);
+                    formData.append("folder", `porterfamily/bios`);
                     formData.append("upload_preset", "hrbbhef2");
 
                     fetch(
@@ -42,10 +42,8 @@ const editPostQuill = new Quill('#edit-post-editor', {
                     )
                         .then((response) => response.json())
                         .then((result) => {
-                            console.log(result);
-
-                            const blogPostImage = document.getElementById('blogPostImage');
-                            blogPostImage.value = result.public_id;
+                            cloudinaryPublicIds.push(result.public_id);
+                            imageInput.value = cloudinaryPublicIds;
                             resolve(result.url);
                         })
                         .catch((error) => {
@@ -60,9 +58,21 @@ const editPostQuill = new Quill('#edit-post-editor', {
     theme: 'snow'
 });
 
-const editorContents = editPostQuill.on('text-change', function () {
-    var blogInput = document.querySelector('input[id=content]');
-    var postContent = editPostQuill.root.innerHTML;
-    blogInput.value = postContent;
-    console.log(blogInput.value)
-});
+quill.on('text-change', update);
+var bioInput = document.querySelector('input[id=bio]');
+update();
+
+function update(delta) {
+    var contents = quill.getContents();
+    console.log('contents', contents);
+    var html = "contents = " + JSON.stringify(contents, null, 2);
+    if (delta) {
+        console.log('change', delta)
+        html = "change = " + JSON.stringify(delta, null, 2) + "\n\n" + html;
+    }
+
+    bioInput.value = quill.root.innerHTML;
+}
+
+let cloudinaryPublicIds = [];
+let imageInput = document.querySelector('#imageIds');

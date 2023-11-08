@@ -26,4 +26,11 @@ const setYear = () => {
 })()
 
 //ADDS BORDER TO BLOG POST IMAGES (EMBEDDED THROUGH QUILL RTE)
-document.querySelectorAll('article img').forEach(x=>x.classList.add('img-thumbnail'));
+document.querySelectorAll('article img').forEach(x => x.classList.add('img-thumbnail'));
+
+//GETS PROFILE NAME, SANITIZES AND HYPHENATES AS NEEDED TO FORM URL-FRIENDLY 'PNAME'
+const makePname = () => {
+    const gotName = document.getElementById('name').value;
+    const pname = gotName.trim().toLowerCase().replace(/\s+/g, '-').normalize('NFKD').replace(/[^\w\s.\-_\/]/g, '');
+    document.getElementById("pname").value = pname;
+}

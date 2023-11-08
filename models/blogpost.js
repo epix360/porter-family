@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
-var slug = require('mongoose-slug-generator');
+var slug = require('mongoose-slug-updater');
 
 mongoose.plugin(slug)
 

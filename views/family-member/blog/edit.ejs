@@ -13,11 +13,11 @@
                     <label class="form-label" for="content">Content</label>
                     <input type="hidden" id="blogPostImage" name="blogPost[blogPostImage]">
                     <input type="hidden" id="content" name="content" aria-describedby="content" required>
-                    <div id="edit-post-editor" class="form-control editor-container"><%-blogPost.content%></div>
+                    <div id="editor-container" class="form-control editor-container"><%-blogPost.content%></div>
                 </div>
                 <button type="submit" class="btn btn-success mb-3">Submit</button>
             </form>
             <a href="/family-member/<%=profile.pname%>/blog/<%= blogPost.slug %>">Cancel</a>
         </div>
     </div>
-    <script type="text/javascript" src="/js/editPostQuillInit.js"></script>
+    <script type="text/javascript" src="/js/blog-editor.js"></script>

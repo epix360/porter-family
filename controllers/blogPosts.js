@@ -45,7 +45,7 @@ module.exports.renderEditForm = async (req, res) => {
     const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
     const profiles = await Profile.find({})
     const blogPost = await BlogPost.findOne({slug: {$eq: req.params.slug}});
-    if (!slug) {
+    if (!req.params.slug) {
         req.flash('error', 'Post not found!');
         return res.redirect('/family-member/blog/edit');
     }

@@ -22,6 +22,9 @@ const ProfileSchema = new Schema({
     filename: {
         type: String
     },
+    imageIds: {
+        type: Array
+    },
     bio: {
         type: String
     },

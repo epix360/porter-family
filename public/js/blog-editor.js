@@ -20,7 +20,7 @@ var toolbarOptions = [
     ['clean']                                         // remove formatting button
 ];
 
-const newBioQuill = new Quill('#new-bio-container', {
+const quill = new Quill('#editor-container', {
     modules: {
         toolbar: {
             container: toolbarOptions
@@ -29,10 +29,12 @@ const newBioQuill = new Quill('#new-bio-container', {
             upload: (file) => {
                 return new Promise((resolve, reject) => {
                     const formData = new FormData();
-                    formData.append("image", file);
+                    formData.append("file", file);
+                    formData.append("folder", `porterfamily/blog`);
+                    formData.append("upload_preset", "hrbbhef2");
 
                     fetch(
-                        "https://api.imgbb.com/1/upload?key=7a97dbf9e779c72eca388a12d7cd1df2",
+                        "https://api.cloudinary.com/v1_1/dzfjji5xy/image/upload",
                         {
                             method: "POST",
                             body: formData
@@ -40,8 +42,9 @@ const newBioQuill = new Quill('#new-bio-container', {
                     )
                         .then((response) => response.json())
                         .then((result) => {
-                            console.log(result);
-                            resolve(result.data.url);
+                            cloudinaryPublicIds.push(result.public_id);
+                            imageInput.value = cloudinaryPublicIds;
+                            resolve(result.url);
                         })
                         .catch((error) => {
                             reject("Upload failed");
@@ -55,9 +58,21 @@ const newBioQuill = new Quill('#new-bio-container', {
     theme: 'snow'
 });
 
-const editorContents = newBioQuill.on('text-change', function () {
-    var bioInput = document.querySelector('input[id=bio]');
-    var bioContent = newBioQuill.root.innerHTML;
-    bioInput.value = bioContent;
-    console.log(bioInput.value)
-});
+quill.on('text-change', update);
+var blogInput = document.querySelector('input[id=content]');
+update();
+
+function update(delta) {
+    var contents = quill.getContents();
+    console.log('contents', contents);
+    var html = "contents = " + JSON.stringify(contents, null, 2);
+    if (delta) {
+        console.log('change', delta)
+        html = "change = " + JSON.stringify(delta, null, 2) + "\n\n" + html;
+    }
+
+    blogInput.value = quill.root.innerHTML;
+}
+
+let cloudinaryPublicIds = [];
+let imageInput = document.querySelector('#imageIds');

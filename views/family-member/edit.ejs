@@ -1,35 +1,69 @@
 <% layout('/layouts/boilerplate') %>
   <h2 class="h1">Edit profile</h2>
-  <form id="bioEditForm" action="/family-member/<%= profile.pname %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+  <form id="bioEditForm" action="/family-member/<%= profile.pname %>?_method=PUT" method="POST" novalidate
+    class="validated-form" enctype="multipart/form-data">
     <div class="row">
       <div class="col">
         <div class="mb-3">
           <label class="form-label" for="name">Name</label>
           <input class="form-control" type="text" name="name" id="name" placeholder="name" spellcheck="true"
             value="<%= profile.name %>" aria-describedby="name" required>
+          <input type="hidden" id="pname" name="pname" value="<%= profile.pname %>">
         </div>
         <div class="mb-3">
           <label class="form-label" for="age">Age</label>
-          <input class="form-control" type="number" name="age" id="age" placeholder="age" aria-describedby="age" value="<%= profile.age %>"
-            required>
+          <input class="form-control" type="number" name="age" id="age" placeholder="age" aria-describedby="age"
+            value="<%= profile.age %>" required>
         </div>
         <div class="mb-3">
           <label class="form-label" for="job">Occupation</label>
-          <input class="form-control" type="string" name="job" id="job" placeholder="job" spellcheck="true" aria-describedby="job"
-            value="<%= profile.job %>" required>
+          <input class="form-control" type="string" name="job" id="job" placeholder="job" spellcheck="true"
+            aria-describedby="job" value="<%= profile.job %>" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 d-none" id="uploader">
           <label for="image" class="form-label">Upload profile picture</label>
-          <input class="form-control" name="image" type="file" id="image" value="<%= profile.image %>" required>
-      </div>
+          <input class="form-control mb-3" name="image" type="file" id="image" value="<%= profile.image %>" required>
+          <% if(profile.image) { %>
+            <a href="#" class="btn btn-info" id="cancelBtn">Cancel</a>
+            <% } %>
+        </div>
+        <div class="mb-3" id="currentPic">
+          <p>Profile picture</p>
+          <img class="img-thumbnail" width="300" src="<%= profile.image %>" alt="">
+          <a class="btn btn-info" href="#" id="updatePhotoBtn">Update profile picture</a>
+        </div>
       </div>
       <div class="col">
         <label class="form-label" for="bio">Bio</label>
+        <input type="hidden" id="imageIds" name="blogPost[imageIds]">
         <input type="hidden" name="bio" id="bio" aria-describedby="bio" required>
-        <div id="edit-profile-container" class="editor-container" style="max-height: 350px;"><%- profile.bio %></div>
+        <div id="editor-container" class="editor-container" style="max-height: 350px;"><%- profile.bio %></div>
       </div>
     </div>
     <button type="submit" class="btn btn-primary mb-3">Submit</button>
   </form>
   <a href="/family-member/<%= profile.pname %>">Cancel</a>
-  <script type="text/javascript" src="/js/bioEditQuillInit.js"></script>
+  <script>
+    const name = document.getElementById('name');
+    const pname = document.getElementById('pname')
+
+    name.addEventListener("change", updateValue);
+
+    function updateValue(e) {
+      pname.value = e.target.value.trim().toLowerCase().replace(/\s+/g, '-').normalize('NFKD').replace(/[^\w\s.\-_\/]/g, '');
+      console.log(pname)
+    }
+
+    const updatePhotoBtn = document.querySelector('#updatePhotoBtn');
+    const cancelBtn = document.querySelector('#cancelBtn');
+
+    [updatePhotoBtn, cancelBtn].forEach(function (el) {
+      el.addEventListener("click", function () {
+        const uploader = document.querySelector('#uploader');
+        const currentPic = document.querySelector('#currentPic');
+        uploader.classList.toggle("d-none");
+        currentPic.classList.toggle("d-none");
+      });
+    })
+  </script>
+  <script type="text/javascript" src="/js/bio-editor.js"></script>
