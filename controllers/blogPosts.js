@@ -1,21 +1,23 @@
 const Profile = require('../models/profile');
 const BlogPost = require('../models/blogpost');
+const { cloudinary } = require("../cloudinary");
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 module.exports.renderBlogIndex = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    const blogPosts = await BlogPost.find({profile: profile._id}).sort({date:-1});
+    const blogPosts = await BlogPost.find({ profile: profile._id }).sort({ date: -1 });
     res.render('family-member/blog/index', { profile, profiles, blogPosts })
 }
 
 module.exports.renderNewPostForm = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({});
     res.render('family-member/blog/new', { profile, profiles });
 }
 
 module.exports.renderNewPost = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const publicId = req.body.blogPost.imageIds;
     const idArr = publicId.split(',');
     const imageId = idArr;
@@ -23,6 +25,14 @@ module.exports.renderNewPost = async (req, res) => {
     blogPost.imageIds = imageId;
     profile.blogPosts.push(blogPost);
     blogPost.profile = profile;
+    const imageIdsToDelete = req.body.blogPost.imageIdsToDelete;
+    const idsToDelete = imageIdsToDelete.split(',');
+
+    await cloudinary.api
+        .delete_resources(idsToDelete,
+            { type: 'upload', resource_type: 'image', invalidate: true })
+        .then(console.log);
+        
     await profile.save();
     await blogPost.save();
     req.flash('success', 'Successfully created new blog post!');
@@ -30,10 +40,10 @@ module.exports.renderNewPost = async (req, res) => {
 }
 
 module.exports.renderBlogPost = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}})
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } })
     const profiles = await Profile.find({})
-    const blogPost = await BlogPost.findOne({slug: {$eq: req.params.slug}}).populate('profile', 'name');
-    const blogPosts = await BlogPost.find({profile: profile._id}).sort({date:-1});
+    const blogPost = await BlogPost.findOne({ slug: { $eq: req.params.slug } }).populate('profile', 'name');
+    const blogPosts = await BlogPost.find({ profile: profile._id }).sort({ date: -1 });
     if (!blogPost) {
         req.flash('error', 'Post not found!');
         return res.redirect('/family-member/blog/show');
@@ -42,9 +52,9 @@ module.exports.renderBlogPost = async (req, res) => {
 }
 
 module.exports.renderEditForm = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    const blogPost = await BlogPost.findOne({slug: {$eq: req.params.slug}});
+    const blogPost = await BlogPost.findOne({ slug: { $eq: req.params.slug } });
     if (!req.params.slug) {
         req.flash('error', 'Post not found!');
         return res.redirect('/family-member/blog/edit');
@@ -53,15 +63,23 @@ module.exports.renderEditForm = async (req, res) => {
 }
 
 module.exports.editBlogPost = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}});
-    const blogPost = await BlogPost.findOneAndUpdate({slug: {$eq: req.params.slug}}, req.body, { runValidators: true, new: true });
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
+    const blogPost = await BlogPost.findOneAndUpdate({ slug: { $eq: req.params.slug } }, req.body, { runValidators: true, new: true });
+    const imageIdsToDelete = req.body.blogPost.imageIdsToDelete;
+    const idsToDelete = imageIdsToDelete.split(',');
+
+    await cloudinary.api
+        .delete_resources(idsToDelete,
+            { type: 'upload', resource_type: 'image', invalidate: true })
+        .then(console.log);
+
     req.flash('success', 'Successfully updated blog post!');
-    res.redirect(`/family-member/${ profile.pname }/blog/${ blogPost.slug }`)
+    res.redirect(`/family-member/${profile.pname}/blog/${blogPost.slug}`);
 }
 
 module.exports.deleteBlogPost = async (req, res) => {
-    const profile = await Profile.findOne({pname: { $eq: req.params.pname}})
-    await BlogPost.findOneAndDelete({slug: {$eq: req.params.slug}});
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } })
+    await BlogPost.findOneAndDelete({ slug: { $eq: req.params.slug } });
     req.flash('success', 'Successfully deleted blog post')
-    res.redirect(`/family-member/${ profile.pname }/blog`);
+    res.redirect(`/family-member/${profile.pname}/blog`);
 }

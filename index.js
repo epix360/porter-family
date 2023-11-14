@@ -26,7 +26,7 @@ const blogPostRoutes = require('./routes/blogPosts');
 
 mongoose.connect('mongodb://localhost:27017/porterFamily')
     .then(() => {
-        console.log('connection open')
+        console.log('Connection open')
     })
     .catch(err => {
         console.log(err)
@@ -39,7 +39,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.set('models', path.join(__dirname, '/models'));
 
-app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -175,5 +174,5 @@ app.use(function(req, res, next){
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${ port }`)
+    console.log(`App listening on port ${ port }`)
 })

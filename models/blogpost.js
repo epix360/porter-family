@@ -26,7 +26,7 @@ const PostSchema = new Schema({
     slug: {
         type: String,
         slug: 'title',
-        slug_padding_size: 2,
+        slugPaddingSize: 2,
         unique: true,
     }
 });
