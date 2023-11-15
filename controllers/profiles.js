@@ -1,6 +1,5 @@
 const Profile = require('../models/profile');
 const BlogPost = require('../models/blogpost');
-const { cloudinary } = require("../cloudinary");
 
 module.exports.renderFamilyIndex = async (req, res) => {
     const profiles = await Profile.find({})
