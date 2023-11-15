@@ -11,6 +11,11 @@ body {
   font-family: $font-sans-serif;
   font-size: 1.2rem;
 
+  p {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
   .logout-message {
     background-color: $cream;
     color: $prblue

@@ -25,6 +25,10 @@ body {
   font-family: "Source Sans 3", sans-serif;
   font-size: 1.2rem;
 }
+body p {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
 body .logout-message {
   background-color: #F6FFF8;
   color: #032B43;
