@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require('express')
-var cors = require('cors')
 const app = express()
 const port = 3000
 const path = require('path')
@@ -18,19 +17,16 @@ const LocalStrategy = require('passport-local');
 const Profile = require('./models/profile');
 const { storeReturnTo } = require('./middleware');
 const helmet = require('helmet');
-
 const mongoSanitize = require('express-mongo-sanitize');
+
+const MongoStore = require('connect-mongo');
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/porterFamily'
+
+mongoose.connect(dbUrl);
 
 const profileRoutes = require('./routes/profiles');
 const blogPostRoutes = require('./routes/blogPosts');
-
-mongoose.connect('mongodb://localhost:27017/porterFamily')
-    .then(() => {
-        console.log('Connection open')
-    })
-    .catch(err => {
-        console.log(err)
-    })
 
 mongoose.set('strictQuery', true);
 
@@ -44,12 +40,29 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 
+const secret = process.env.SECRET || 'trombonesandwichpartychimney!';
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 3600,
+    crypto: {
+        secret: 'trombonesandwichpartychimney'
+    }
+});
+
+store.on("error", function(e) {
+    console.log("Session store error")
+})
+
 const sessionConfig = {
-    secret: 'thisshouldbeabettersecret!',
+    store,
+    name: 'session',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -126,13 +139,15 @@ app.use('/family-member/:pname/blog', blogPostRoutes);
 
 //HOMEPAGE
 app.get('/', catchAsync(async (req, res) =>{
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    res.render('index', { profiles })
+    res.render('index', { profile, profiles })
 }))
 
 app.get('/login', catchAsync(async (req, res) =>{
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    res.render('login', { profiles })
+    res.render('login', { profile, profiles })
 }))
 
 app.post('/login',
@@ -154,19 +169,22 @@ app.get('/logout', (req, res, next) => {
     });
 });
 
-app.get('/college-savings', catchAsync(async (req, res) =>{
+app.get('/college-savings', catchAsync(async (req, res) => {
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    res.render('college-savings', { profiles })
+    res.render('college-savings', { profile, profiles })
 }))
 
-app.get('/experiments', catchAsync(async (req, res) =>{
+app.get('/experiments', catchAsync(async (req, res) => {
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    res.render('experiments', { profiles })
+    res.render('experiments', { profile, profiles })
 }))
 
-app.get('/page-not-found', catchAsync(async (req, res) =>{
+app.get('/page-not-found', catchAsync(async (req, res) => {
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
-    res.render('page-not-found', { profiles })
+    res.render('page-not-found', { profile, profiles })
 }))
 
 app.use(function(req, res, next){

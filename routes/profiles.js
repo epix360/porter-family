@@ -10,9 +10,11 @@ const upload = multer({ storage })
 router.route('/')
     .get(catchAsync(profiles.renderFamilyIndex))
 
+    //TEMPORARILY REMOVED isLoggedIn TO CREATE INITIAL PROFILES WHEN DEPLOYED
+    //TO-DO RESTORE isLoggedIn REQUIREMENT AFTER SITE DEPLOYED AND PROFILES SET UP
 router.route('/new')
-    .get(isLoggedIn, catchAsync(profiles.renderNewProfile))
-    .post(isLoggedIn, upload.single('image'), catchAsync(profiles.postNewProfile))
+    .get(catchAsync(profiles.renderNewProfile))
+    .post(upload.single('image'), catchAsync(profiles.postNewProfile))
 
 router.route('/:pname')
     .get(catchAsync(profiles.renderProfilePage))
