@@ -10,7 +10,9 @@ module.exports.renderBlogIndex = async (req, res) => {
 }
 
 module.exports.renderNewPostForm = async (req, res) => {
-    res.render('family-member/blog/new');
+    const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
+    const profiles = await Profile.find({})
+    res.render('family-member/blog/new',  { profile, profiles });
 }
 
 module.exports.renderNewPost = async (req, res) => {
