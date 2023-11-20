@@ -34,7 +34,7 @@ module.exports.renderProfilePage = async (req, res) => {
     const { id } = req.params;
     const profile = await Profile.findOne({ pname: { $eq: req.params.pname } })
     const profiles = await Profile.find({})
-    const blogPosts = await BlogPost.find({ pname: { $eq: req.params.pname } }).sort({ date: -1 });
+    const blogPosts = await BlogPost.find({ profile: profile._id }).sort({ date: -1 });
     if (!profile) {
         req.flash('error', 'Cannot find that profile!');
         return res.redirect('/');

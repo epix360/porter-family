@@ -21,8 +21,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 const MongoStore = require('connect-mongo');
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/porterFamily'
-
+const dbUrl =  'mongodb://localhost:27017/porterFamily'
+//process.env.DB_URL ||
 mongoose.set('strictQuery', true);
 
 mongoose.connect(dbUrl);
@@ -110,7 +110,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/dzfjji5xy/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://res.cloudinary.com/dzfjji5xy/", //MATCH CLOUDINARY ACCOUNT
                 "https://images.unsplash.com/",,
                 "https://static.tvmaze.com"
             ],
