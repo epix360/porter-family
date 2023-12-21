@@ -26,32 +26,29 @@ const quill = new Quill('#editor-container', {
             container: toolbarOptions
         },
         imageUploader: {
-            upload: (file) => {
-                return new Promise((resolve, reject) => {
-                    const formData = new FormData();
-                    formData.append("file", file);
-                    formData.append("folder", `porterfamily`);
-                    formData.append("upload_preset", "hrbbhef2");
+            async upload(file) {
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("folder", `porterfamily`);
+                formData.append("upload_preset", "hrbbhef2");
 
-                    fetch(
+                try {
+                    const response = await fetch(
                         "https://api.cloudinary.com/v1_1/dzfjji5xy/image/upload",
                         {
                             method: "POST",
                             body: formData
                         }
-                    )
-                        .then((response) => response.json())
-                        .then((result) => {
-                            var { secure_url, public_id } = result;
-                            cloudinaryPublicIds.push(public_id);
-                            imageInput.value = cloudinaryPublicIds;
-                            resolve(secure_url)
-                        })
-                        .catch((error) => {
-                            reject("Upload failed");
-                            console.error("Error:", error);
-                        });
-                });
+                    );
+                    const result = await response.json();
+                    const { secure_url, public_id } = result;
+                    cloudinaryPublicIds.push(public_id);
+                    imageInput.value = cloudinaryPublicIds;
+                    return secure_url;
+                } catch (error) {
+                    console.error("Error:", error);
+                    throw new Error("Upload failed");
+                }
             }
         },
     },
@@ -69,23 +66,22 @@ var blogInput = document.querySelector('input[id=content]');
 update();
 
 function update(delta) {
-    var contents = quill.getContents();
+    const contents = quill.getContents();
     console.log('contents', contents);
-    var html = "contents = " + JSON.stringify(contents, null, 2);
+
+    let html = `contents = ${JSON.stringify(contents, null, 2)}`;
     if (delta) {
-        console.log('change', delta)
-        html = "change = " + JSON.stringify(delta, null, 2) + "\n\n" + html;
+        console.log('change', delta);
+        html = `change = ${JSON.stringify(delta, null, 2)}\n\n${html}`;
     }
 
-    //EXTRACTS CLOUDINARY PUBLIC_ID FROM IMG URL AND ASSIGNS AS IMG ID IN HTML (ONLY WHEN IN .ql-editor)
-    let imgs = document.querySelectorAll('.ql-editor img');
-    let imgArr = [...imgs];
-    for (let i = 0; i < imgArr.length; i++) {
-        let imgUrl = imgArr[i].src;
-        let imgSplit = imgUrl.split('/').pop();
-        let imgId = "porterfamily" + "/" + imgSplit.split('.').shift();
-        imgArr[i].setAttribute("id", imgId);
-    }
+    const imgs = Array.from(document.querySelectorAll('.ql-editor img'));
+    imgs.forEach(img => {
+        const imgUrl = img.src;
+        const imgSplit = imgUrl.split('/').pop();
+        const imgId = `porterfamily/${imgSplit.split('.').shift()}`;
+        img.setAttribute('id', imgId);
+    });
 
     blogInput.value = quill.root.innerHTML;
 }
@@ -97,12 +93,10 @@ const config = { attributes: true, attributeOldValue: true, childList: true, sub
 
 // Callback function to execute when mutations are observed
 const callback = (mutationList, observer) => {
-    for (let mutation of mutationList) {
-        idsToDestroy.push(mutation.removedNodes[0].attributes[1].value)
-        let imageIdsToDelete = idsToDestroy.toString();
-        let idsToDeleteInput = document.querySelector('#imageIdsToDelete');
-        idsToDeleteInput.value = imageIdsToDelete;
-    }
+    const idsToDestroy = mutationList.map(mutation => mutation.removedNodes[0].attributes[1].value);
+    const imageIdsToDelete = idsToDestroy.join(",");
+    const idsToDeleteInput = document.querySelector('#imageIdsToDelete');
+    idsToDeleteInput.value = imageIdsToDelete;
 };
 
 // Create an observer instance linked to the callback function
