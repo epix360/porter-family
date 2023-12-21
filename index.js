@@ -18,6 +18,7 @@ const Profile = require('./models/profile');
 const { storeReturnTo } = require('./middleware');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
+const limit = require("express-limit").limit;
 
 const MongoStore = require('connect-mongo');
 
@@ -40,17 +41,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(mongoSanitize());
 
-const secret = process.env.SECRET || 'trombonesandwichpartychimney!';
+const secret = process.env.SECRET;
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     touchAfter: 24 * 3600,
     crypto: {
-        secret: 'trombonesandwichpartychimney'
+        secret: 'process.env.SECRET'
     }
 });
 
-store.on("error", function(e) {
+store.on("error", function (e) {
     console.log("Session store error")
 })
 
@@ -111,7 +112,7 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/dzfjji5xy/", //MATCH CLOUDINARY ACCOUNT
-                "https://images.unsplash.com/",,
+                "https://images.unsplash.com/", ,
                 "https://static.tvmaze.com"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
@@ -138,21 +139,26 @@ app.use('/family-member', profileRoutes);
 app.use('/family-member/:pname/blog', blogPostRoutes);
 
 //HOMEPAGE
-app.get('/', catchAsync(async (req, res) =>{
+app.get('/', catchAsync(async (req, res) => {
     const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
     res.render('index', { profile, profiles })
 }))
 
-app.get('/login', catchAsync(async (req, res) =>{
+app.get('/login', catchAsync(async (req, res) => {
     const profile = await Profile.findOne({ pname: { $eq: req.params.pname } });
     const profiles = await Profile.find({})
     res.render('login', { profile, profiles })
 }))
 
 app.post('/login',
+    limit({
+        message: "Too many failed requests, please wait 60 seconds to try again.",
+        max: 5, // 5 requests
+        period: 60 * 1000, // per minute (60 seconds)
+    }),
     storeReturnTo,
-    passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),
+    passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
     (req, res) => {
         req.flash('success', 'Welcome back!');
         const redirectUrl = res.locals.returnTo || '/';
@@ -187,10 +193,10 @@ app.get('/page-not-found', catchAsync(async (req, res) => {
     res.render('page-not-found', { profile, profiles })
 }))
 
-app.use(function(req, res, next){
+app.use(function (req, res, next) {
     res.status(404).render('page-not-found', { title: "Sorry, page not found" });
 });
 
 app.listen(port, () => {
-    console.log(`App listening on port ${ port }`)
+    console.log(`App listening on port ${port}`)
 })
